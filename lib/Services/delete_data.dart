@@ -4,7 +4,9 @@ import 'dart:convert';
 class DeleteService {
   Future<bool> deleteData(String id) async {
     var client = http.Client();
+    
     var uri = Uri.parse('http://192.168.0.45:8079/projects/phpdata/apicrudtrial/api/delete.php');
+    // var uri = Uri.parse('http://192.168.100.12:8079/projects/phpdata/apicrudtrial/api/delete.php');
 
     try {
       var response = await client.post(

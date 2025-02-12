@@ -13,7 +13,7 @@ class Post {
     String id;
     String title;
     String body;
-    String image;
+    String images;
     String active;
     String dated;
 
@@ -22,7 +22,7 @@ class Post {
        required this.id,
        required this.title,
        required this.body,
-       required this.image,
+       required this.images,
        required this.active,
        required this.dated,
     });
@@ -32,7 +32,7 @@ class Post {
         id: json["id"],
         title: json["title"],
         body: json["body"],
-        image: json["image"],
+        images: json["images"],
         active: json["active"],
         dated: json["dated"],
     );
@@ -42,7 +42,7 @@ class Post {
         "id": id,
         "title": title,
         "body": body,
-        "image": image,
+        "images": images,
         "active": active,
         "dated": dated,
     };

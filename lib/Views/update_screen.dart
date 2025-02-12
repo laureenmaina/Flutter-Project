@@ -28,15 +28,18 @@ class _UpdateFormScreenState extends State<UpdateFormScreen> {
     print("PostID: ${idController.text}");
     print("Title: ${titleController.text}");
     print("Body: ${bodyController.text}");
+    print("Images: ${imageController.text}");
+    print("Active: ${activeController.text}");
+    print("Dated: ${datedController.text}");
 
     Post modifiedPost = Post(
       userId: userIdController.text,
       id: idController.text,
       title: titleController.text,
       body: bodyController.text,
-      image: bodyController.text,
-      active: bodyController.text,
-      dated: bodyController.text,
+      images: imageController.text,
+      active: activeController.text,
+      dated: datedController.text,
     );
 
     bool success = await UpdateService().updateData(modifiedPost);
@@ -71,8 +74,7 @@ class _UpdateFormScreenState extends State<UpdateFormScreen> {
           key: _formKey,
           child: Column(
             children: [
-              TextFormField(
-                
+              TextFormField(   
                 controller: userIdController,
                 decoration: InputDecoration(labelText: "User ID"),
                 keyboardType: TextInputType.number,
@@ -121,10 +123,10 @@ class _UpdateFormScreenState extends State<UpdateFormScreen> {
                 controller: imageController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: "Enter Image",
+                  labelText: "Enter Image Url",
                 ),
                 validator: (value) =>
-                    value == null || value.isEmpty ? "Enter Image" : null,
+                    value == null || value.isEmpty ? "Enter Image Url" : null,
               ),
               const SizedBox(height: 20),
               TextFormField(

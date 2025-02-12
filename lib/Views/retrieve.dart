@@ -48,6 +48,25 @@ class RetrievePage extends StatelessWidget {
                   border: OutlineInputBorder(),
                   labelText:'body : ${info.body}', 
                 ),),
+
+                TextField(
+                obscureText:true, 
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText:'images : ${info.images}', 
+                ),),
+                 TextField(
+                obscureText:true, 
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText:'active : ${info.active}', 
+                ),),
+                   TextField(
+                obscureText:true, 
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText:'dated : ${info.dated}', 
+                ),),
             ],
           ),
         ),

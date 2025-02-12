@@ -2,11 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:rest_api_flutter/Services/delete_data.dart';
 import 'package:rest_api_flutter/Services/remote_service.dart';
-import 'package:rest_api_flutter/Views/images_.dart';
+import 'package:rest_api_flutter/Views/image_picker.dart';
+import 'package:rest_api_flutter/Views/radio_picker.dart';
 import 'package:rest_api_flutter/models/post.dart';
 import 'package:rest_api_flutter/Services/add_data.dart';
 import 'package:rest_api_flutter/Services/update_data.dart';
-import 'package:flutter/cupertino.dart';
+
 
 
 class PostFormScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
 
   List<Post>? infomation;
   var isLoaded = false;
-  String url = '';
+  // String url = '';
   
 
 
@@ -41,7 +42,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
     idController =    TextEditingController(text: widget.info?.id ?? "");
     titleController = TextEditingController(text: widget.info?.title ?? "" );
     bodyController = TextEditingController(text: widget.info?.body ?? "");
-    imageController = TextEditingController(text: widget.info?.image ?? "");
+    imageController = TextEditingController(text: widget.info?.images ?? "");
     activeController = TextEditingController(text: widget.info?.active ?? "");
     // datedController = new TextEditingController(text: widget.info?.dated ?? "");
     datedController = TextEditingController(text: _dateTime.toString());
@@ -68,7 +69,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
           id: idController.text,
           title: titleController.text,
           body: bodyController.text,
-          image: imageController.text,
+          images: imageController.text,
           active: activeController.text,
           dated: datedController.text,
         );
@@ -106,7 +107,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
     print("PostID: ${idController.text}");
     print("Title: ${titleController.text}");
     print("Body: ${bodyController.text}");
-    print("Image: ${imageController.text}");
+    print("Images: ${imageController.text}");
     print("Active: ${activeController.text}");
     print("Dated: ${datedController.text}");
 
@@ -116,7 +117,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
       id: idController.text,
       title: titleController.text,
       body: bodyController.text,
-      image: imageController.text,
+      images: imageController.text,
       active: activeController.text,
       dated: datedController.text,
     );
@@ -203,8 +204,6 @@ void notactivepost() {
      });
 }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -256,97 +255,44 @@ void notactivepost() {
                 ),
                 validator: (value) =>
                     value == null || value.isEmpty ? "Enter Body" : null,
-              ),
-              // TextFormField(
-              //   controller: imageController,
-              //   decoration: InputDecoration(
-              //     border: OutlineInputBorder(),
-              //     labelText: "Enter Image",
-              //   ),
-              //   validator: (value) =>
-              //       value == null || value.isEmpty ? "Enter Image" : null,
-              // ),             
-              
+              ),                
               const SizedBox(height: 15),
-              TextFormField(
-                controller: activeController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Enter Active",
-                ),
-                validator: (value) =>
-                    value == null || value.isEmpty ? "Enter Active" : null,
+              RadioPicker(),
+
+
+            const SizedBox(height: 20),
+            TextField(
+            controller: datedController,
+            decoration: const InputDecoration(
+              labelText: 'DATE',
+              filled: true,
+              prefixIcon: Icon(Icons.calendar_today),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide.none
               ),
-       
-               Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                 ElevatedButton(
-                  onPressed: activepost,
-                  child: const Text("Active"),
-                ),
-                ElevatedButton(
-                  onPressed: notactivepost,
-                  child: const Text("Not Active"),
-                ),
-              ],
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.blue)
+              ),
             ),
+            readOnly: true,
+            onTap: () {
+              _selectDate();
+            },
+          ),
+      
               const SizedBox(height: 20),
-                TextFormField(
-                controller: datedController,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: "Enter Date",
-                ),
-                validator: (value) =>
-                    value == null || value.isEmpty ? "Enter Date" : null,
-              ),
-              Text(_dateTime.toString(), style: TextStyle(fontSize:10),),
-              const SizedBox(height: 10),
-              MaterialButton(
-                onPressed:_showDatePicker,
-                color: Colors.blue,
-                child: const Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text("Choose Date",
-                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize:15,
-                     ),
-                     ),
-                ),
-               
-              ),
-            const SizedBox(height: 10),
-              MaterialButton(
-                color: Colors.blue,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const FetchImage(),
-                  ));
-                },
-                child: Text("Fetch Images"),
-              ),
+             MyImagePicker(),
+              const SizedBox(height: 20),
 
-            // ElevatedButton(
-            //   style: ElevatedButton.styleFrom(
-            //     minimumSize: Size.fromHeight(20),
-            //     primary: Colors.white,
-            //     onPrimary:Colors.black,
-            //     textStyle: TextStyle(fontSize: 20),
-            //   ),
-            //   child: Row(
-            //     children: [
-            //       Icon()
-            //     ],
-            //   )),
-
-            const SizedBox(height: 10),
+        
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
+               const SizedBox(height: 15), 
+                ElevatedButton(
+                  onPressed: submitPost,
+                  child: const Text("Create Entry"),
+                ),
                 const SizedBox(height: 15), 
                 ElevatedButton(
                   onPressed: updatePost,
@@ -365,6 +311,20 @@ void notactivepost() {
         ),
     );
       
+  }
+  Future<void>_selectDate() async{
+   DateTime? _picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2000), 
+      lastDate: DateTime(2100)
+      );
+
+    if (_picked != null){
+      setState(() {
+        datedController.text = _picked.toString().split(" ")[0];
+      });
+    }
   }
 }
 

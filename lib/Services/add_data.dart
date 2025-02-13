@@ -7,7 +7,7 @@ class AddService {
 Future<bool> postData(Post post) async {
   var client = http.Client();
 
-  var uri = Uri.parse('http://192.168.0.45:8079/projects/phpdata/apicrudtrial/api/create.php');
+var uri = Uri.parse('http://192.168.0.45:8079/projects/phpdata/apicrudtrial/api/create.php');
  //var uri = Uri.parse('http://192.168.100.12:8079/projects/phpdata/apicrudtrial/api/create.php');
 
 
@@ -22,6 +22,8 @@ Future<bool> postData(Post post) async {
       "images": post.images,
       "active": post.active,
       "dated": post.dated,
+      "username": post.username,
+      "password": post.password,
     }),
   );
 

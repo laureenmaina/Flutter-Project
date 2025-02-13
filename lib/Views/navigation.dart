@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:rest_api_flutter/Views/home_page.dart';
+import 'package:rest_api_flutter/Views/login_page.dart';
 import 'package:rest_api_flutter/Views/post_screen.dart';
 
 
@@ -36,15 +37,15 @@ Widget build(BuildContext context) {
               );
             },
           ),
-          // CupertinoButton(
-          //   child: const Text('Active Button'), 
-          //   onPressed: () {
-          //     Navigator.push(
-          //       context,
-          //       CupertinoPageRoute(builder: (context) => const ActiveButton()),
-          //     );
-          //   },
-          // ),
+          CupertinoButton(
+            child: const Text('Login'), 
+            onPressed: () {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => const LoginPage()),
+              );
+            },
+          ),
           //   CupertinoButton(
           //   child: const Text('Delete an Entry'), 
           //   onPressed: () {

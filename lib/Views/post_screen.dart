@@ -10,6 +10,7 @@ import 'package:rest_api_flutter/Services/update_data.dart';
 
 
 
+
 class PostFormScreen extends StatefulWidget {
   const PostFormScreen({super.key, this.info});
   final Post? info;
@@ -27,6 +28,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
   late TextEditingController imageController = TextEditingController();
   late TextEditingController activeController = TextEditingController();
   late TextEditingController datedController = TextEditingController();
+   TextEditingController _passwordController = TextEditingController();
+    TextEditingController _usernameController= TextEditingController();
 
   List<Post>? infomation;
   var isLoaded = false;
@@ -46,6 +49,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
     activeController = TextEditingController(text: widget.info?.active ?? "");
     // datedController = new TextEditingController(text: widget.info?.dated ?? "");
     datedController = TextEditingController(text: _dateTime.toString());
+    _usernameController = TextEditingController(text: widget.info?.username ?? "");
+    _passwordController = TextEditingController(text: widget.info?.password ?? "");
 
   }
 
@@ -72,6 +77,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
           images: imageController.text,
           active: activeController.text,
           dated: datedController.text,
+          username: _usernameController.text,
+          password: _passwordController.text,
         );
 
         bool success = await AddService().postData(newPost);
@@ -87,6 +94,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
           imageController.clear();
           activeController.clear();
           datedController.clear();
+          _usernameController.clear();
+          _passwordController.clear();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text("Failed to create post.")),
@@ -110,6 +119,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
     print("Images: ${imageController.text}");
     print("Active: ${activeController.text}");
     print("Dated: ${datedController.text}");
+    print("Username: ${_usernameController.text}");
+    print("Password: ${_passwordController.text}");
 
 
     Post modifiedPost = Post(
@@ -120,6 +131,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
       images: imageController.text,
       active: activeController.text,
       dated: datedController.text,
+      username: _usernameController.text,
+      password: _passwordController.text,
     );
 
     bool success = await UpdateService().updateData(modifiedPost);
@@ -136,6 +149,8 @@ class _PostFormScreenState extends State<PostFormScreen> {
           imageController.clear();
           activeController.clear();
           datedController.clear();
+          _usernameController.clear();
+          _passwordController.clear();
     } else {
       // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
@@ -255,12 +270,33 @@ void notactivepost() {
                 ),
                 validator: (value) =>
                     value == null || value.isEmpty ? "Enter Body" : null,
-              ),                
+              ), 
+                   const SizedBox(height: 15),
+              TextFormField(
+                controller: _usernameController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Enter Username",
+                ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? "Enter Username" : null,
+              ), 
+                   const SizedBox(height: 15),
+              TextFormField(
+                controller: _passwordController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: "Enter Password",
+                ),
+                validator: (value) =>
+                    value == null || value.isEmpty ? "Enter Password" : null,
+              ), 
+                             
               const SizedBox(height: 15),
               RadioPicker(),
 
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 15),
             TextField(
             controller: datedController,
             decoration: const InputDecoration(
@@ -280,25 +316,25 @@ void notactivepost() {
             },
           ),
       
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
              MyImagePicker(),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
 
         
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-               const SizedBox(height: 15), 
+               const SizedBox(height: 10), 
                 ElevatedButton(
                   onPressed: submitPost,
                   child: const Text("Create Entry"),
                 ),
-                const SizedBox(height: 15), 
+                const SizedBox(height: 10), 
                 ElevatedButton(
                   onPressed: updatePost,
                   child: const Text("Update Entry"),
                 ),
-                const SizedBox(width: 15),
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: deletePost,
                   child: const Text("Delete Entry"),

@@ -16,6 +16,8 @@ class Post {
     String images;
     String active;
     String dated;
+    String username;
+    String password;
 
     Post({
        required this.userId,
@@ -25,6 +27,8 @@ class Post {
        required this.images,
        required this.active,
        required this.dated,
+       required this.username,
+       required this.password
     });
 
     factory Post.fromJson(Map<String, dynamic> json) => Post(
@@ -35,6 +39,8 @@ class Post {
         images: json["images"],
         active: json["active"],
         dated: json["dated"],
+        username: json["username"],
+        password: json["password"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -45,5 +51,7 @@ class Post {
         "images": images,
         "active": active,
         "dated": dated,
+        "username": username,
+        "password": password,
     };
 }

@@ -6,9 +6,9 @@ class UpdateService {
   Future<bool> updateData(Post post) async {
     var client = http.Client();
    
-   var uri = Uri.parse('http://192.168.0.45:8079/projects/phpdata/apicrudtrial/api/update.php');
-   // var uri = Uri.parse('http://192.168.100.12:8079/projects/phpdata/apicrudtrial/api/read.php');
-    // Construct JSON body
+  var uri = Uri.parse('http://192.168.0.45:8079/projects/phpdata/apicrudtrial/api/update.php');
+   //var uri = Uri.parse('http://192.168.100.12:8079/projects/phpdata/apicrudtrial/api/read.php');
+    
     Map<String, dynamic> requestBody = {
       "userId": post.userId,
       "id": post.id,
@@ -17,6 +17,8 @@ class UpdateService {
       "images": post.images, 
       "active": post.active,
       "dated": post.dated,
+      "username": post.username,
+      "password": post.password,
     };
 
     // Debugging: Print JSON before sending

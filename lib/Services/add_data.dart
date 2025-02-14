@@ -24,6 +24,7 @@ var uri = Uri.parse('http://192.168.0.45:8079/projects/phpdata/apicrudtrial/api/
       "dated": post.dated,
       "username": post.username,
       "password": post.password,
+      
     }),
   );
 
